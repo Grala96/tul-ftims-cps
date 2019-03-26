@@ -1,4 +1,4 @@
-package tul-ftims-cps;
+package tul.ftims.cps;
 
 /**
  * Hello world!

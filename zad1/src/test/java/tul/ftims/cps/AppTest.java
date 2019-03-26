@@ -1,4 +1,4 @@
-package tul-ftims-cps;
+package tul.ftims.cps;
 
 import static org.junit.Assert.assertTrue;
 
