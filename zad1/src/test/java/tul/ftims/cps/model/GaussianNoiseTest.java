@@ -1,8 +1,6 @@
-package tul.ftims.cps.generator;
+package tul.ftims.cps.model;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class GaussianNoiseTest {
 

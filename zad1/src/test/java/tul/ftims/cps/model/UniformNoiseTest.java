@@ -1,4 +1,4 @@
-package tul.ftims.cps.generator;
+package tul.ftims.cps.model;
 
 class UniformNoiseTest {
 

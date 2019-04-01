@@ -1,22 +1,23 @@
-package tul.ftims.cps.generator;
-
-
-import lombok.Data;
+package tul.ftims.cps.model;
 
 import java.util.Map;
 import java.util.Random;
 
-@Data
-public class UniformNoise extends Signal {
+public class GaussianNoise extends Signal {
 
-    public UniformNoise(Double amplitude, Double startTime, Double duration, Double samplingFrequency) {
+    public GaussianNoise(Double amplitude, Double startTime, Double duration, Double samplingFrequency) {
         super(amplitude, startTime, duration, samplingFrequency);
         this.generate(getSamples());
     }
 
-    public UniformNoise(double amplitude, double startTime, double duration, double samplingFrequency) {
+    public GaussianNoise(double amplitude, double startTime, double duration, double samplingFrequency) {
         super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(samplingFrequency));
         this.generate(getSamples());
+    }
+
+    // Funkcja gęstości rozkładu zmiennej losowej
+    public Double probabilityDensityFunction(Double x){
+        return (1/Math.sqrt(2*Math.PI))*Math.exp(-(Math.pow(x.doubleValue(),2))/2);
     }
 
     public void generate(Map<Double, Double> samples) {
@@ -25,8 +26,7 @@ public class UniformNoise extends Signal {
         double maximumAmplitude = Math.abs(this.getAmplitude().doubleValue()); // max(A)
         for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += 1 / this.getSamplingFrequency()) {
             double rand = minimalAmplitude + new Random().nextDouble() * (maximumAmplitude - minimalAmplitude);
-            samples.put(t1, rand);
+            samples.put(t1, this.probabilityDensityFunction(rand));
         }
     }
-
 }
