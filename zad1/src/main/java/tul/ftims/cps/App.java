@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tul.ftims.cps.model.SignalManager;
-import tul.ftims.cps.generator.RectanguralSignal;
+import tul.ftims.cps.model.RectanguralSignal;
 
 /**
  * Hello world!
@@ -15,7 +15,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
+        System.out.println(getClass().getResource("./main.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
+
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
+        Parent root = loader.load();
+
         primaryStage.setTitle("Digital Signal Processing Laboratory");
         primaryStage.setScene(new Scene(root, 1024, 768));
         primaryStage.setResizable(false);
