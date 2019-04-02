@@ -12,12 +12,12 @@ import java.util.Random;
 public class UniformNoise extends Signal {
 
     public UniformNoise(Double amplitude, Double startTime, Double duration, Double samplingFrequency) {
-        super(amplitude, startTime, duration, samplingFrequency);
+        super(amplitude, startTime, duration, samplingFrequency, signalType.CONTINIOUS);
         this.generate(getSamples());
     }
 
     public UniformNoise(double amplitude, double startTime, double duration, double samplingFrequency) {
-        super(amplitude, startTime, duration, samplingFrequency);
+        super(amplitude, startTime, duration, samplingFrequency, signalType.CONTINIOUS);
         this.generate(getSamples());
     }
 

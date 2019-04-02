@@ -16,11 +16,27 @@ public class Signal {
     private Double samplingFrequency = 1.0; // Częstotliwość próbkowania [Hz]
     private Map<Double, Double> samples = new TreeMap<>(); // Mapa (czas, wartość próbki)
 
-    public Signal(Double amplitude, Double startTime, Double duration, Double samplingFrequency) {
+    private Double T; //okres
+    private signalType signal; //typ sygnału (ciągły / dyskretny)
+
+    public Signal(Double amplitude, Double startTime, Double duration, Double samplingFrequency, signalType type) {
         this.uuid = UUID.randomUUID();
         this.amplitude = amplitude;
         this.startTime = startTime;
         this.duration = duration;
         this.samplingFrequency = samplingFrequency;
+        this.signal = type;
     }
+
+    public Signal(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double T, signalType type) {
+        this.uuid = UUID.randomUUID();
+        this.amplitude = amplitude;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.samplingFrequency = samplingFrequency;
+        this.T = T;
+        this.signal = type;
+    }
+
+
 }

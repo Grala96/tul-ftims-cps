@@ -6,12 +6,12 @@ import java.util.Random;
 public class GaussianNoise extends Signal {
 
     public GaussianNoise(Double amplitude, Double startTime, Double duration, Double samplingFrequency) {
-        super(amplitude, startTime, duration, samplingFrequency);
+        super(amplitude, startTime, duration, samplingFrequency, signalType.CONTINIOUS);
         this.generate(getSamples());
     }
 
     public GaussianNoise(double amplitude, double startTime, double duration, double samplingFrequency) {
-        super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(samplingFrequency));
+        super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(samplingFrequency), signalType.CONTINIOUS);
         this.generate(getSamples());
     }
 
