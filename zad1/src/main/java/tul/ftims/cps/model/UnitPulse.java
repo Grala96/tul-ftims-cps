@@ -18,13 +18,18 @@ public class UnitPulse extends Signal {
         this.generate(getSamples());
     }
 
+    public double func(double t1) {
+        double result;
+        if (t1 == ts) result = this.getAmplitude();
+        else result = 0;
+        return result;
+    }
+
     public void generate(Map<Double, Double> samples){
         Double t2 = this.getStartTime() + this.getDuration(); // (t1 + d)
         double result;
         for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += 1 / this.getSamplingFrequency()) {
-            if (t1==ts) result = this.getAmplitude();
-            else result = 0;
-            samples.put(t1, result);
+            samples.put(t1, func(t1));
         }
     }
 }

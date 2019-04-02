@@ -6,7 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tul.ftims.cps.model.RectanguralSignal;
+import tul.ftims.cps.model.Signal;
 import tul.ftims.cps.model.SignalManager;
+import tul.ftims.cps.model.signalType;
 
 /**
  * Hello world!
@@ -29,7 +31,9 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        //RectanguralSignal signal = new RectanguralSignal(5, 0, 100, 1, 0.5);
-        //System.out.println(signal.getSamples().toString());
+
+        Signal signal = new Signal(5.0, 0.0, 100.0, 1.0,1.0,signalType.CONTINIOUS);
+        //double sig = signal.countIntegral(1, 3,signal::func);
+       // System.out.println(sig);
     }
 }

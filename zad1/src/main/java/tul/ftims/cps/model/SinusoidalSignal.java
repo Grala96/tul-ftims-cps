@@ -18,11 +18,14 @@ public class SinusoidalSignal extends Signal {
         this.generate(getSamples());
     }
 
+    public double func(double t1){
+        return this.getAmplitude() * Math.sin(Math.toRadians((2*Math.PI*(t1-this.getStartTime()))/this.getT()));
+    }
+
     public void generate(Map<Double, Double> samples){
         Double t2 = this.getStartTime() + this.getDuration(); // (t1 + d)
         for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += 1 / this.getSamplingFrequency()) {
-            double result = this.getAmplitude() * Math.sin(Math.toRadians((2*Math.PI*(t1-this.getStartTime()))/this.getT()));
-            samples.put(t1, result);
+            samples.put(t1, func(t1));
         }
     }
 
