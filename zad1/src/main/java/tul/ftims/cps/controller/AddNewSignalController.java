@@ -2,8 +2,6 @@ package tul.ftims.cps.controller;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -11,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tul.ftims.cps.model.Signal;
-import tul.ftims.cps.model.SignalType;
+import tul.ftims.cps.model.SignalType2;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,7 +31,7 @@ public class AddNewSignalController {
     private AnchorPane ANS;
 
     @FXML
-    private ChoiceBox<SignalType> ANS_SignalType;
+    private ChoiceBox<SignalType2> ANS_SignalType;
 
     @FXML
     private TextField ANS_Amplitude;
@@ -93,7 +91,7 @@ public class AddNewSignalController {
         assert ANS_Preview != null : "fx:id=\"ANS_Preview\" was not injected: check your FXML file 'AddNewSignal.fxml'.";
 
         // ChoiceBox dla typu sygnału (zdefiniowane po enum SignalType)
-        ANS_SignalType.getItems().setAll(SignalType.values());
+        ANS_SignalType.getItems().setAll(SignalType2.values());
         ANS_SignalType.getSelectionModel().selectFirst();
 
         // Walidacja dla wartości zmiennoprzecinkowych
