@@ -1,42 +1,21 @@
 package tul.ftims.cps.controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import tul.ftims.cps.App;
 import tul.ftims.cps.model.Signal;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
-//import static tul.ftims.cps.App.observableListOfSignals;
 import static tul.ftims.cps.App.signalManager;
 
 public class MainController {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private MenuItem MB_F_NewProject;
@@ -87,14 +66,13 @@ public class MainController {
     private TitledPane P_ListOfSignals;
 
     @FXML
-    public  ListView<Signal> P_ListOfSignals_ListView;
+    public ListView<Signal> P_ListOfSignals_ListView;
 
     @FXML
     private TitledPane P_Statistics;
 
     @FXML
     void initialize() {
-
 
         assert MB_F_NewProject != null : "fx:id=\"MB_F_NewProject\" was not injected: check your FXML file 'Main.fxml'.";
         assert MB_F_LoadProject != null : "fx:id=\"MB_F_LoadProject\" was not injected: check your FXML file 'Main.fxml'.";
@@ -112,29 +90,23 @@ public class MainController {
         assert P_Histogram != null : "fx:id=\"P_Histogram\" was not injected: check your FXML file 'Main.fxml'.";
         assert P_View != null : "fx:id=\"P_View\" was not injected: check your FXML file 'Main.fxml'.";
         assert P_ListOfSignals != null : "fx:id=\"P_ListOfSignals\" was not injected: check your FXML file 'Main.fxml'.";
-        if (P_ListOfSignals_ListView == null)
-            throw new AssertionError("fx:id=\"P_ListOfSignals_ListView\" was not injected: check your FXML file 'Main.fxml'.");
+        assert P_ListOfSignals_ListView != null : "fx:id=\"P_ListOfSignals_ListView\" was not injected: check your FXML file 'Main.fxml'.";
         assert P_Statistics != null : "fx:id=\"P_Statistics\" was not injected: check your FXML file 'Main.fxml'.";
 
-        MB_S_NewSignal.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(App.class.getResource("/AddNewSignal.fxml"));
-                    Parent root = loader.load();
-                    Stage stage = new Stage();
-                    stage.setTitle("Signal And Noise Generator");
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                } catch (IOException e) {
-                    System.out.println("Can't load window \"New Signal\"");
-                }
+        MB_S_NewSignal.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("/AddNewSignal.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Signal And Noise Generator");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                System.out.println("Can't load window \"New Signal\"");
             }
         });
 
-
         P_ListOfSignals_ListView.setItems(signalManager.getRepository());
-
 
     }
 }
