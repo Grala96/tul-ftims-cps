@@ -2,24 +2,31 @@ package tul.ftims.cps.model;
 
 import java.util.Map;
 
-public class SinusoidalSignalHalfErected extends Signal{
+public class SymmetricalRectangularSignal extends Signal {
 
-    public SinusoidalSignalHalfErected(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double T) {
+    Double kw; //współczynnik czasu trwania wartości maksymalnej do okresu
+
+    public SymmetricalRectangularSignal(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double T, Double kw) {
         super(amplitude, startTime, duration, samplingFrequency, T, signalType.CONTINIOUS);
+        this.kw=kw;
         this.generate(getSamples());
         this.calculateValues();
     }
 
-    public SinusoidalSignalHalfErected(double amplitude, double startTime, double duration, double samplingFrequency, double T) {
+    public SymmetricalRectangularSignal(double amplitude, double startTime, double duration, double samplingFrequency, double T, double kw) {
         super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(samplingFrequency), Double.valueOf(T), signalType.CONTINIOUS);
+        this.kw=kw;
         this.generate(getSamples());
         this.calculateValues();
     }
 
-    public double func(double t1) {
-        return 0.5 * this.getAmplitude() *
-                (Math.sin(((2*Math.PI)/this.getT())*((t1-this.getStartTime())))
-                        + Math.abs(Math.sin(((2*Math.PI)/this.getT())*((t1-this.getStartTime())))));
+    public double func(double t1){
+        double result;
+        double k = Math.floor((t1 - this.getStartTime()) / this.getT());
+        if (k > (t1 - 0.5 * this.getT()) / this.getT())
+            result = this.getAmplitude();
+        else result = 0-this.getAmplitude();
+        return result;
     }
 
     public double funcAbs(double t1){
@@ -31,13 +38,12 @@ public class SinusoidalSignalHalfErected extends Signal{
     }
 
     public double funcVar (double t1){
-        Double t2 = this.getStartTime() + this.getDuration();
         return Math.pow(func(t1)-getMediumValue(),2);
     }
 
     public void generate(Map<Double, Double> samples){
         Double t2 = this.getStartTime() + this.getDuration(); // (t1 + d)
-        for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += 1 / this.getT()) {
+        for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += 1 / this.getSamplingFrequency()) {
             samples.put(t1, func(t1));
         }
     }
@@ -50,4 +56,5 @@ public class SinusoidalSignalHalfErected extends Signal{
         this.setVariance(MediumValueORAbsolutMediumValueORMediumPowerORVarianceC(this.getStartTime(),t2,this::funcVar));
         this.setEffectiveValue(EffectiveValueC(this.getStartTime(),t2,this::funcPow));
     }
+
 }
