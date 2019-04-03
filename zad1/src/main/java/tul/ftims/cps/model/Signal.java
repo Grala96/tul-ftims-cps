@@ -20,6 +20,12 @@ public class Signal {
     private Double T; //okres
     private signalType signal; //typ sygnału (ciągły / dyskretny)
 
+    private Double mediumValue;
+    private Double absoluteMediumValue;
+    private Double mediumPower;
+    private Double variance;
+    private Double effectiveValue;
+
     public Signal(Double amplitude, Double startTime, Double duration, Double samplingFrequency, signalType type) {
         this.uuid = UUID.randomUUID();
         this.amplitude = amplitude;
@@ -52,45 +58,24 @@ public class Signal {
 
     // C - dla ciągłego; D - dla dyskretnego
 
-    // tutaj jeszcze walczę z jebanymi całkami!!!
-
-    public Double MediumValueC(double t1, double t2, Function<Double, Double> func){
+    //w zależności od funckji podstawiamy func lub funcAbs lub funcPow lub funcVar
+    public Double MediumValueORAbsolutMediumValueORMediumPowerORVarianceC(double t1, double t2, Function<Double, Double> func){
         return 1/(t2-t1)*countIntegral(t1,t2,func);
     }
-
-    public Double AbsoluteMediumValueC(double t1, double t2, Function<Double, Double> func){
-        return 1/(t2-t1)*countIntegral(t1,t2,func); // TODO
-    }
-
-    public Double MediumPowerC(double t1, double t2, Function<Double, Double> func){
-        return 0.0; // TODO
-    }
-
-    public Double VarianceC(double t1, double t2, Function<Double, Double> func){
-        return Math.sqrt(MediumPowerC(t1,t2,func));
-    }
-
+    //jako func należy podstawić funcPow
     public Double EffectiveValueC(double t1, double t2, Function<Double, Double> func){
-        return 0.0; // TODO
+        return Math.sqrt(MediumValueORAbsolutMediumValueORMediumPowerORVarianceC(t1,t2,func));
     }
-
-    public Double MediumValueD(double n1, double n2, Function<Double, Double> func){
-        return 0.0; // TODO
+    //w zależności od funckji podstawiamy func lub funcAbs lub funcPow lub funcVar
+    public Double MediumValueORAbsolutMediumValueORMediumPowerORVarianceD(Double t1, Double t2, Double fs, Function<Double, Double> func){
+        double result=0.0;
+        for (; t1.compareTo(t2) < 0; t1 += 1 / fs){
+            result+=func.apply(t1);
+        }
+        return 1/(t2-t1+1)*result;
     }
-
-    public Double AbsoluteMediumValueD(double n1, double n2, Function<Double, Double> func){
-        return 0.0; // TODO
-    }
-
-    public Double MediumPowerD(double n1, double n2, Function<Double, Double> func){
-        return 0.0; // TODO
-    }
-
-    public Double VarianceD(double n1, double n2, Function<Double, Double> func){
-        return Math.sqrt(MediumPowerD(n1,n2,func));
-    }
-
-    public Double EffectiveValueD(double n1, double n2, Function<Double, Double> func){
-        return 0.0; // TODO
+    //jako func należy podstawić funcPow
+    public Double EffectiveValueD(Double t1, Double t2, Double fs, Function<Double, Double> func){
+        return Math.sqrt(MediumValueORAbsolutMediumValueORMediumPowerORVarianceD(t1,t2,fs,func));
     }
 }

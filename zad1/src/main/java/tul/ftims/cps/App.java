@@ -5,10 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tul.ftims.cps.model.RectanguralSignal;
-import tul.ftims.cps.model.Signal;
-import tul.ftims.cps.model.SignalManager;
-import tul.ftims.cps.model.signalType;
+import tul.ftims.cps.model.*;
 
 /**
  * Hello world!
@@ -31,9 +28,30 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        //SinusoidalSignal signal = new SinusoidalSignal(5.0, 0.0, 10.0, 10.0,2.0);
+        //SinusoidalSignalHalfErected signal = new SinusoidalSignalHalfErected(5.0, 0.0, 10.0, 10.0,2.0);
+        //UnitJump signal = new UnitJump(5.0, 0.0, 10.0, 10.0, 2.0);
+        //UnitPulse signal = new UnitPulse(5.0, 0.0, 10.0, 10.0, 2.0);
+        ImpulsiveNoise signal = new ImpulsiveNoise(5.0, 0.0, 10.0, 10.0);
 
-        Signal signal = new Signal(5.0, 0.0, 100.0, 1.0,1.0,signalType.CONTINIOUS);
-        //double sig = signal.countIntegral(1, 3,signal::func);
-       // System.out.println(sig);
+
+        System.out.println("aaa");
+        System.out.println(signal.getMediumValue());
+        System.out.println(signal.getAbsoluteMediumValue());
+        System.out.println(signal.getMediumPower());
+        System.out.println(signal.getVariance());
+        System.out.println(signal.getEffectiveValue());
+        System.out.println(signal.getSamples());
+        System.out.println(signal.getSamples().size());
+
+        for (double key: signal.getSamples().keySet()){
+            System.out.print(key +" ");
+        }
+        System.out.println("");
+        System.out.println("aaa");
+
+        for (double key: signal.getSamples().keySet()){
+            System.out.print(signal.getSamples().get(key) +" ");
+        }
     }
 }
