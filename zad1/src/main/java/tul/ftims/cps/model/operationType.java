@@ -1,5 +1,5 @@
 package tul.ftims.cps.model;
 
-public enum operationType {
-    ADD, SUBSTRACT, MULTIPLY, DIVIDE
+public enum OperationType {
+    ADD, SUBTRACT, MULTIPLY, DIVIDE
 }

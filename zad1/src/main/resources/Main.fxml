@@ -121,7 +121,7 @@
                         </GridPane>
                      </bottom>
                      <right>
-                        <TitledPane fx:id="P_ListOfSignals" alignment="CENTER" collapsible="false" prefHeight="654.0" prefWidth="200.0" text="List of Signals" BorderPane.alignment="CENTER">
+                        <TitledPane fx:id="P_ListOfSignals" alignment="CENTER" collapsible="false" maxWidth="240.0" minWidth="240.0" prefHeight="654.0" prefWidth="240.0" text="List of Signals" BorderPane.alignment="CENTER">
                            <content>
                               <ListView fx:id="P_ListOfSignals_ListView" editable="true" prefHeight="200.0" prefWidth="200.0" />
                            </content>
@@ -131,7 +131,7 @@
                         </TitledPane>
                      </right>
                      <center>
-                        <TitledPane fx:id="P_Statistics" alignment="CENTER" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="371.0" minWidth="565.0" prefHeight="371.0" prefWidth="565.0" text="Statistics" BorderPane.alignment="CENTER">
+                        <TitledPane fx:id="P_Statistics" alignment="CENTER" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="371.0" prefWidth="565.0" text="Statistics" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </BorderPane.margin>
