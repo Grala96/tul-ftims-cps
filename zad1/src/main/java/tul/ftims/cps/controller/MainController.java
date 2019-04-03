@@ -108,5 +108,7 @@ public class MainController {
 
         P_ListOfSignals_ListView.setItems(signalManager.getRepository());
 
+        
+
     }
 }
