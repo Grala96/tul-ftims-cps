@@ -1,6 +1,9 @@
 package tul.ftims.cps.controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,7 +22,10 @@ import tul.ftims.cps.model.Signal;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 //import static tul.ftims.cps.App.observableListOfSignals;
 import static tul.ftims.cps.App.signalManager;
@@ -81,23 +87,13 @@ public class MainController {
     private TitledPane P_ListOfSignals;
 
     @FXML
-    public static ListView<String> P_ListOfSignals_ListView = new ListView<>();
+    public  ListView<Signal> P_ListOfSignals_ListView;
 
     @FXML
     private TitledPane P_Statistics;
 
-//    public void refreshSignalList(){
-
-//        P_ListOfSignals_ListView.getItems().add("Test");
-//            P_ListOfSignals_ListView.getItems().clear();
-//            for(Signal signal: signalManager.getRepository()) {
-//                P_ListOfSignals_ListView.getItems().add(signal.getName());
-//            }
-//    }
-
     @FXML
     void initialize() {
-
 
 
         assert MB_F_NewProject != null : "fx:id=\"MB_F_NewProject\" was not injected: check your FXML file 'Main.fxml'.";
@@ -116,7 +112,8 @@ public class MainController {
         assert P_Histogram != null : "fx:id=\"P_Histogram\" was not injected: check your FXML file 'Main.fxml'.";
         assert P_View != null : "fx:id=\"P_View\" was not injected: check your FXML file 'Main.fxml'.";
         assert P_ListOfSignals != null : "fx:id=\"P_ListOfSignals\" was not injected: check your FXML file 'Main.fxml'.";
-        assert P_ListOfSignals_ListView != null : "fx:id=\"P_ListOfSignals_ListView\" was not injected: check your FXML file 'Main.fxml'.";
+        if (P_ListOfSignals_ListView == null)
+            throw new AssertionError("fx:id=\"P_ListOfSignals_ListView\" was not injected: check your FXML file 'Main.fxml'.");
         assert P_Statistics != null : "fx:id=\"P_Statistics\" was not injected: check your FXML file 'Main.fxml'.";
 
         MB_S_NewSignal.setOnAction(new EventHandler<ActionEvent>() {
@@ -136,81 +133,8 @@ public class MainController {
         });
 
 
-
-//        medienverwaltung.obList.addListener(new ListChangeListener<Medium>(){
-//            @Override
-//            public void onChanged(ListChangeListener.Change<? extends Medium> change) {
-//                showliste.getItems().clear();
-//                for(Medium medium : medienverwaltung.obList){
-//                    //toString() is overwritten and works, too
-//                    showliste.getItems().add(medium.toString());
-//                }
-//            }
-//        });
-
-//        observableListOfSignalRepository = ;
-
-
-//        P_ListOfSignals_ListView.itemsProperty().setValue(observableListOfSignalRepository);
-
-//        P_ListOfSignals_ListView = new ListView<>(observableListOfSignalRepository);
-//
-//        P_ListOfSignals_ListView.setCellFactory(param -> new ListCell<Signal>() {
-//            @Override
-//            protected void updateItem(Signal item, boolean empty) {
-//                super.updateItem(item, empty);
-//
-//                if (empty || item == null || item.getName() == null) {
-//                    setText(null);
-//                } else {
-//                    setText(item.getName());
-//                }
-//            }
-//        });
-//
-//        P_ListOfSignals_ListView.setCellFactory(lv -> {
-//            TextFieldListCell<Signal> cell = new TextFieldListCell<Signal>();
-//            cell.setConverter(new StringConverter<Signal>() {
-//                @Override
-//                public String toString(Signal signal) {
-//                    return signal.getName();
-//                }
-//                @Override
-//                public Signal fromString(String string) {
-//                    Signal signal = cell.getItem();
-//                    signal.setName(string);
-//                    return signal ;
-//                }
-//            });
-//            return cell;
-//        });
-
-
-
-//        P_ListOfSignals_ListView.itemsProperty().bind(observableListOfSignalRepository.);
-
-//        void addListener(MapChangeListener<? super K,? super V> listener)
-//
-//        P_ListOfSignals_ListView.getItems().addListener(new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldValue, Boolean newValue) {
-//                if (!newValue) {
-//                    if (!doubleValidation.matcher(textField.getText()).matches()) {
-//                        textField.setText("");
-//                    }
-//                }
-//            }
-//        });
-
-
+        P_ListOfSignals_ListView.setItems(signalManager.getRepository());
 
 
     }
-
-
-//    button2.setOnAction(new EventHandler<ActionEvent>() {
-//        @Override public void handle(ActionEvent e) {
-//            label.setText("Accepted");
-//        }
-//    });
 }

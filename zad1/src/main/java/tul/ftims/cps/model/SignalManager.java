@@ -1,5 +1,7 @@
 package tul.ftims.cps.model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lombok.Data;
 
 import java.io.File;
@@ -11,16 +13,16 @@ import java.util.TreeMap;
 @Data
 public class SignalManager {
 
-    private ArrayList<Signal> repository;
+    private ObservableList<Signal> repository;
     private File file;
 
-    public SignalManager(ArrayList<Signal> repository, File file) {
+    public SignalManager(ObservableList<Signal> repository, File file) {
         this.repository = repository;
         this.file = file;
     }
 
     public SignalManager() {
-        this.repository = new ArrayList<>();
+        this.repository = FXCollections.observableList(new ArrayList<Signal>());
     }
 
     public void add(Signal signal){

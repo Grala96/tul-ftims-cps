@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import static tul.ftims.cps.App.signalManager;
-import static tul.ftims.cps.controller.MainController.P_ListOfSignals_ListView;
 //import static tul.ftims.cps.controller.MainController.refreshSignalList;
 
 public class AddNewSignalController {
@@ -120,7 +119,7 @@ public class AddNewSignalController {
                         System.out.println("Can't create this signal!");
                     }
                     ((Stage) ANS_Create.getScene().getWindow()).close();
-                    P_ListOfSignals_ListView.getItems().add("Test");
+//                    P_ListOfSignals_ListView.getItems().add("Test");
                     break;
                 }
                 default: {

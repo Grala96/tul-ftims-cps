@@ -99,5 +99,10 @@ public class Signal {
         this.samplingFrequency = samplingFrequency;
     }
 
+    @Override
+    public String toString(){
+        return this.name;
+    }
+
 
 }
