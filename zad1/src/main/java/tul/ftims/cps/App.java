@@ -32,7 +32,10 @@ public class App extends Application {
         //SinusoidalSignalHalfErected signal = new SinusoidalSignalHalfErected(5.0, 0.0, 10.0, 10.0,2.0);
         //UnitJump signal = new UnitJump(5.0, 0.0, 10.0, 10.0, 2.0);
         //UnitPulse signal = new UnitPulse(5.0, 0.0, 10.0, 10.0, 2.0);
-        ImpulsiveNoise signal = new ImpulsiveNoise(5.0, 0.0, 10.0, 10.0);
+        //ImpulsiveNoise signal = new ImpulsiveNoise(5.0, 0.0, 10.0, 10.0);
+        //RectanguralSignal signal = new RectanguralSignal(5.0, 0.0, 10.0, 10.0, 2.0, 0.5);
+        //SymmetricalRectangularSignal signal = new SymmetricalRectangularSignal(5.0, 0.0, 10.0, 10.0, 2.0, 0.5);
+        TriangularSignal signal = new TriangularSignal(5.0, 0.0, 10.0, 10.0, 2.0, 0.5);
 
 
         System.out.println("aaa");
