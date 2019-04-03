@@ -10,6 +10,7 @@ import java.util.UUID;
 public class Signal {
 
     private UUID uuid;
+    private String name; // Własna nazwa dla sygnału (user)
     private Double amplitude; // Amplituda [dimensionless unit]
     private Double startTime; // Czas początkowy [s]
     private Double duration; // Czas trwania sygnału [s]
@@ -18,6 +19,16 @@ public class Signal {
 
     public Signal(Double amplitude, Double startTime, Double duration, Double samplingFrequency) {
         this.uuid = UUID.randomUUID();
+        this.name = uuid.toString();
+        this.amplitude = amplitude;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.samplingFrequency = samplingFrequency;
+    }
+
+    public Signal(String name, Double amplitude, Double startTime, Double duration, Double samplingFrequency) {
+        this.uuid = UUID.randomUUID();
+        this.name = name;
         this.amplitude = amplitude;
         this.startTime = startTime;
         this.duration = duration;
