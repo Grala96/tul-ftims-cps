@@ -13,7 +13,7 @@ import tul.ftims.cps.model.signals.TriangularSignal;
 /**
  * Hello world!
  */
-@Data
+
 public class App extends Application {
 
     public static SignalManager signalManager = new SignalManager();
