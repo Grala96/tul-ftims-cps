@@ -8,30 +8,20 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import tul.ftims.cps.model.Signal;
-import tul.ftims.cps.model.SignalType2;
+import tul.ftims.cps.model.manager.Signal;
+import tul.ftims.cps.model.manager.SignalType;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import static tul.ftims.cps.App.signalManager;
-import static tul.ftims.cps.controller.MainController.P_ListOfSignals_ListView;
-//import static tul.ftims.cps.controller.MainController.refreshSignalList;
 
 public class AddNewSignalController {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private AnchorPane ANS;
 
     @FXML
-    private ChoiceBox<SignalType2> ANS_SignalType;
+    private ChoiceBox<SignalType> ANS_SignalType;
 
     @FXML
     private TextField ANS_Amplitude;
@@ -91,7 +81,7 @@ public class AddNewSignalController {
         assert ANS_Preview != null : "fx:id=\"ANS_Preview\" was not injected: check your FXML file 'AddNewSignal.fxml'.";
 
         // ChoiceBox dla typu sygnału (zdefiniowane po enum SignalType)
-        ANS_SignalType.getItems().setAll(SignalType2.values());
+        ANS_SignalType.getItems().setAll(SignalType.values());
         ANS_SignalType.getSelectionModel().selectFirst();
 
         // Walidacja dla wartości zmiennoprzecinkowych
@@ -102,11 +92,20 @@ public class AddNewSignalController {
         setValidationForTextField(ANS_BasicPeriod);
         setValidationForTextField(ANS_FillFactor);
 
-
         // Stwarzamy sygnał po wciśnięciu przycisku "Create"
         ANS_Create.setOnAction(event -> {
 
             switch (ANS_SignalType.getValue()) {
+                case SINUSOIDAL_SIGNAL:
+                    break;
+                case SINUSOIDAL_SIGNAL_ERECTED:
+                    break;
+                case SINUSOIDAL_SIGNAL_HALF_ERECTED:
+                    break;
+                case GAUSSIAN_NOISE:
+                    break;
+                case IMPULSIVE_NOISE:
+                    break;
                 case UNIFORM_NOISE: {
                     try {
                         signalManager.add(new Signal(
@@ -119,10 +118,15 @@ public class AddNewSignalController {
                         e.printStackTrace();
                         System.out.println("Can't create this signal!");
                     }
-                    ((Stage) ANS_Create.getScene().getWindow()).close();
-                    P_ListOfSignals_ListView.getItems().add("Test");
+                    ((Stage) ANS_Create.getScene().getWindow()).close(); // Closed window
                     break;
                 }
+                case RECTANGULAR_SIGNAL:
+                    break;
+                case UNIT_JUMP:
+                    break;
+                case UNIT_PULSE:
+                    break;
                 default: {
                     System.out.println("Choosen unknown signal type! Creating canceled!");
                     break;

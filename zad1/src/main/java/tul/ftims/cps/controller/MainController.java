@@ -1,36 +1,22 @@
 package tul.ftims.cps.controller;
 
-import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import tul.ftims.cps.App;
-import tul.ftims.cps.model.Signal;
+import tul.ftims.cps.model.manager.Signal;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-//import static tul.ftims.cps.App.observableListOfSignals;
 import static tul.ftims.cps.App.signalManager;
 
 public class MainController {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private MenuItem MB_F_NewProject;
@@ -81,24 +67,46 @@ public class MainController {
     private TitledPane P_ListOfSignals;
 
     @FXML
-    public static ListView<String> P_ListOfSignals_ListView = new ListView<>();
+    public ListView<Signal> P_ListOfSignals_ListView;
 
     @FXML
     private TitledPane P_Statistics;
 
-//    public void refreshSignalList(){
+    @FXML
+    private TextField P_Amplitude;
 
-//        P_ListOfSignals_ListView.getItems().add("Test");
-//            P_ListOfSignals_ListView.getItems().clear();
-//            for(Signal signal: signalManager.getRepository()) {
-//                P_ListOfSignals_ListView.getItems().add(signal.getName());
-//            }
-//    }
+    @FXML
+    private TextField P_StartTime;
+
+    @FXML
+    private TextField P_Duration;
+
+    @FXML
+    private TextField P_SampleFrequency;
+
+    @FXML
+    private TextField P_BasicPeriod;
+
+    @FXML
+    private TextField P_FillFactor;
+
+    @FXML
+    private TextField P_AverageValue;
+
+    @FXML
+    private TextField P_MeanAbsolute;
+
+    @FXML
+    private TextField P_AverageStrength;
+
+    @FXML
+    private TextField P_Variance;
+
+    @FXML
+    private TextField P_EffectiveValue;
 
     @FXML
     void initialize() {
-
-
 
         assert MB_F_NewProject != null : "fx:id=\"MB_F_NewProject\" was not injected: check your FXML file 'Main.fxml'.";
         assert MB_F_LoadProject != null : "fx:id=\"MB_F_LoadProject\" was not injected: check your FXML file 'Main.fxml'.";
@@ -118,99 +126,37 @@ public class MainController {
         assert P_ListOfSignals != null : "fx:id=\"P_ListOfSignals\" was not injected: check your FXML file 'Main.fxml'.";
         assert P_ListOfSignals_ListView != null : "fx:id=\"P_ListOfSignals_ListView\" was not injected: check your FXML file 'Main.fxml'.";
         assert P_Statistics != null : "fx:id=\"P_Statistics\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_Amplitude != null : "fx:id=\"P_Amplitude\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_StartTime != null : "fx:id=\"P_StartTime\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_Duration != null : "fx:id=\"P_Duration\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_SampleFrequency != null : "fx:id=\"P_SampleFrequency\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_BasicPeriod != null : "fx:id=\"P_BasicPeriod\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_FillFactor != null : "fx:id=\"P_FillFactor\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_AverageValue != null : "fx:id=\"P_AverageValue\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_MeanAbsolute != null : "fx:id=\"P_MeanAbsolute\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_AverageStrength != null : "fx:id=\"P_AverageStrength\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_Variance != null : "fx:id=\"P_Variance\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_EffectiveValue != null : "fx:id=\"P_EffectiveValue\" was not injected: check your FXML file 'Main.fxml'.";
 
-        MB_S_NewSignal.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(App.class.getResource("/AddNewSignal.fxml"));
-                    Parent root = loader.load();
-                    Stage stage = new Stage();
-                    stage.setTitle("Signal And Noise Generator");
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                } catch (IOException e) {
-                    System.out.println("Can't load window \"New Signal\"");
-                }
+
+        MB_S_NewSignal.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("/AddNewSignal.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Signal And Noise Generator");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                System.out.println("Can't load window \"New Signal\"");
             }
         });
 
+        P_ListOfSignals_ListView.setItems(signalManager.getRepository());
 
+//        P_ListOfSignals_ListView.getSelectionModel().selectedItemProperty().addListener((InvalidationListener) (observable, oldValue, newValue) -> P_Amplitude.textProperty().setValue());
 
-//        medienverwaltung.obList.addListener(new ListChangeListener<Medium>(){
-//            @Override
-//            public void onChanged(ListChangeListener.Change<? extends Medium> change) {
-//                showliste.getItems().clear();
-//                for(Medium medium : medienverwaltung.obList){
-//                    //toString() is overwritten and works, too
-//                    showliste.getItems().add(medium.toString());
-//                }
-//            }
-//        });
-
-//        observableListOfSignalRepository = ;
-
-
-//        P_ListOfSignals_ListView.itemsProperty().setValue(observableListOfSignalRepository);
-
-//        P_ListOfSignals_ListView = new ListView<>(observableListOfSignalRepository);
-//
-//        P_ListOfSignals_ListView.setCellFactory(param -> new ListCell<Signal>() {
-//            @Override
-//            protected void updateItem(Signal item, boolean empty) {
-//                super.updateItem(item, empty);
-//
-//                if (empty || item == null || item.getName() == null) {
-//                    setText(null);
-//                } else {
-//                    setText(item.getName());
-//                }
-//            }
-//        });
-//
-//        P_ListOfSignals_ListView.setCellFactory(lv -> {
-//            TextFieldListCell<Signal> cell = new TextFieldListCell<Signal>();
-//            cell.setConverter(new StringConverter<Signal>() {
-//                @Override
-//                public String toString(Signal signal) {
-//                    return signal.getName();
-//                }
-//                @Override
-//                public Signal fromString(String string) {
-//                    Signal signal = cell.getItem();
-//                    signal.setName(string);
-//                    return signal ;
-//                }
-//            });
-//            return cell;
-//        });
-
-
-
-//        P_ListOfSignals_ListView.itemsProperty().bind(observableListOfSignalRepository.);
-
-//        void addListener(MapChangeListener<? super K,? super V> listener)
-//
-//        P_ListOfSignals_ListView.getItems().addListener(new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldValue, Boolean newValue) {
-//                if (!newValue) {
-//                    if (!doubleValidation.matcher(textField.getText()).matches()) {
-//                        textField.setText("");
-//                    }
-//                }
-//            }
-//        });
-
-
-
+//        P_Amplitude.textProperty().setValue(P_ListOfSignals_ListView.getSelectionModel().getSelectedItem().getAmplitude().toString()==null?);
 
     }
-
-
-//    button2.setOnAction(new EventHandler<ActionEvent>() {
-//        @Override public void handle(ActionEvent e) {
-//            label.setText("Accepted");
-//        }
-//    });
 }

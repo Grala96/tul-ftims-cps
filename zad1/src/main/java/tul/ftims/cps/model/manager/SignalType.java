@@ -1,6 +1,6 @@
-package tul.ftims.cps.model;
+package tul.ftims.cps.model.manager;
 
-public enum SignalType2 {
+public enum SignalType {
 
     SINUSOIDAL_SIGNAL("Sinusoidal Signal"),
     SINUSOIDAL_SIGNAL_ERECTED("Sinusoidal Signal Erected"),
@@ -14,7 +14,7 @@ public enum SignalType2 {
 
     private String signalType;
 
-    SignalType2(String signalType) {
+    SignalType(String signalType) {
         this.signalType = signalType;
     }
 
