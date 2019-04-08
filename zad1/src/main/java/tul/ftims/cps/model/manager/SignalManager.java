@@ -1,8 +1,9 @@
-package tul.ftims.cps.model;
+package tul.ftims.cps.model.manager;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Data;
+import tul.ftims.cps.model.operations.OperationType;
 
 import java.io.File;
 import java.util.ArrayList;

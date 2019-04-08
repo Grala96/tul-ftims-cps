@@ -1,4 +1,7 @@
-package tul.ftims.cps.model;
+package tul.ftims.cps.model.signals;
+
+import tul.ftims.cps.model.manager.Signal;
+import tul.ftims.cps.model.manager.SignalCategory;
 
 import java.util.Map;
 
