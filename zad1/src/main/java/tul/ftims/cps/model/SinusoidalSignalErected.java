@@ -1,35 +1,22 @@
-package tul.ftims.cps.model.signals;
-
-import tul.ftims.cps.model.manager.Signal;
-import tul.ftims.cps.model.manager.SignalCategory;
+package tul.ftims.cps.model;
 
 import java.util.Map;
 
-public class SymmetricalRectangularSignal extends Signal {
-
-    Double kw; //współczynnik czasu trwania wartości maksymalnej do okresu
-
-    public SymmetricalRectangularSignal(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double T, Double kw) {
+public class SinusoidalSignalErected extends Signal {
+    public SinusoidalSignalErected(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double T) {
         super(amplitude, startTime, duration, samplingFrequency, T, SignalCategory.CONTINUOUS);
-        this.kw = kw;
         this.generate(getSamples());
         this.calculateValues();
     }
 
-    public SymmetricalRectangularSignal(double amplitude, double startTime, double duration, double samplingFrequency, double T, double kw) {
+    public SinusoidalSignalErected(double amplitude, double startTime, double duration, double samplingFrequency, double T) {
         super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(samplingFrequency), Double.valueOf(T), SignalCategory.CONTINUOUS);
-        this.kw = kw;
         this.generate(getSamples());
         this.calculateValues();
     }
 
     public double func(double t1) {
-        double result;
-        double k = Math.floor((t1 - this.getStartTime()) / this.getT());
-        if (k > (t1 - 0.5 * this.getT()) / this.getT())
-            result = this.getAmplitude();
-        else result = 0 - this.getAmplitude();
-        return result;
+        return this.getAmplitude() * Math.abs(Math.sin(((2 * Math.PI) / this.getT()) * ((t1 - this.getStartTime()))));
     }
 
     public double funcAbs(double t1) {
@@ -41,6 +28,7 @@ public class SymmetricalRectangularSignal extends Signal {
     }
 
     public double funcVar(double t1) {
+        Double t2 = this.getStartTime() + this.getDuration();
         return Math.pow(func(t1) - getMediumValue(), 2);
     }
 
@@ -59,5 +47,4 @@ public class SymmetricalRectangularSignal extends Signal {
         this.setVariance(MediumValueORAbsolutMediumValueORMediumPowerORVarianceC(this.getStartTime(), t2, this::funcVar));
         this.setEffectiveValue(EffectiveValueC(this.getStartTime(), t2, this::funcPow));
     }
-
 }

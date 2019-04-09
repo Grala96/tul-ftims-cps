@@ -1,4 +1,4 @@
-package tul.ftims.cps.model.manager;
+package tul.ftims.cps.model;
 
 import com.google.inject.internal.util.Function;
 import lombok.Data;

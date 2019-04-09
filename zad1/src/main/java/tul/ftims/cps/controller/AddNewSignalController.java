@@ -8,8 +8,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import tul.ftims.cps.model.manager.Signal;
-import tul.ftims.cps.model.manager.SignalType;
+import tul.ftims.cps.model.Signal;
+import tul.ftims.cps.model.SignalType;
 
 import java.util.regex.Pattern;
 

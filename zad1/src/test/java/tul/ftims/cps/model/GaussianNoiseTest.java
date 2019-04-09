@@ -1,8 +1,6 @@
 package tul.ftims.cps.model;
 
 import org.junit.jupiter.api.Test;
-import tul.ftims.cps.model.manager.Signal;
-import tul.ftims.cps.model.signals.GaussianNoise;
 
 class GaussianNoiseTest {
 
