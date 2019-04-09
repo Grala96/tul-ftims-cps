@@ -48,6 +48,8 @@ public class AddNewSignalController {
     @FXML
     private TextField ANS_Name;
 
+    @FXML TextField ANS_JumpTime;
+
     @FXML
     private Button ANS_Create;
 

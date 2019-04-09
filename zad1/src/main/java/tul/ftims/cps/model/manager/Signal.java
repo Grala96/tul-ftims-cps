@@ -109,37 +109,37 @@ public class Signal implements Serializable {
         return this.name;
     }
 
-//    public static Signal createSignal(SignalType signalType, Double amplitude, Double startTime,
-//                                      Double duration, Double samplingFrequency, Double basicPeriod,
-//                                      Double fillFactor, Double jumpTime, Double probability) {
-//        switch (signalType) {
-//            case UNIFORM_NOISE:
-//                return null;
-//            case GAUSSIAN_NOISE:
-//                return null;
-//            case SINUSOIDAL_SIGNAL:
-//                return null;
-//            case SINUSOIDAL_SIGNAL_HALF_ERECTED:
-//                return null;
-//            case SINUSOIDAL_SIGNAL_ERECTED:
-//                return null;
-//            case RECTANGULAR_SIGNAL:
-//                return null;
-//            case SYMMETRICAL_RECTANGULAR_SIGNAL:
-//                return null;
-//            case TRIANGULAR_SIGNAL:
-//                return null;
-//            case UNIT_JUMP:
-//                return null;
-//            case UNIT_PULSE:
-//                return null;
-//            case IMPULSIVE_NOISE:
-//                return null;
-//            default:
-//                System.out.println("Choosen unknown signal type! Creating canceled!");
-//                return null;
-//        }
-//    }
+    public static Signal createSignal(SignalType signalType, Double amplitude, Double startTime,
+                                      Double duration, Double samplingFrequency, Double basicPeriod,
+                                      Double fillFactor, Double jumpTime, Double probability) {
+        switch (signalType) {
+            case UNIFORM_NOISE:
+                return new UniformNoise(amplitude, startTime, duration, samplingFrequency);
+            case GAUSSIAN_NOISE:
+                return new GaussianNoise(amplitude, startTime, duration, samplingFrequency);
+            case SINUSOIDAL_SIGNAL:
+                return new SinusoidalSignal(amplitude,startTime,duration,samplingFrequency,basicPeriod);
+            case SINUSOIDAL_SIGNAL_HALF_ERECTED:
+                return new SinusoidalSignalHalfErected(amplitude, startTime,duration,samplingFrequency,basicPeriod);
+            case SINUSOIDAL_SIGNAL_ERECTED:
+                return new SinusoidalSignalErected(amplitude,startTime,duration,samplingFrequency,basicPeriod);
+            case RECTANGULAR_SIGNAL:
+                return new RectanguralSignal(amplitude,startTime,duration,samplingFrequency,basicPeriod,fillFactor);
+            case SYMMETRICAL_RECTANGULAR_SIGNAL:
+                return new SymmetricalRectangularSignal(amplitude,startTime,duration,samplingFrequency,basicPeriod,fillFactor);
+            case TRIANGULAR_SIGNAL:
+                return new TriangularSignal(amplitude,startTime,duration,samplingFrequency,basicPeriod,fillFactor);
+            case UNIT_JUMP:
+                return new UnitJump(amplitude,startTime,duration,samplingFrequency,jumpTime);
+            case UNIT_PULSE:
+                return new UnitPulse(amplitude,startTime,duration,jumpTime);
+            case IMPULSIVE_NOISE:
+                return new ImpulsiveNoise(amplitude,startTime,duration,jumpTime);
+            default:
+                System.out.println("Choosen unknown signal type! Creating canceled!");
+                return null;
+        }
+    }
 }
 
 

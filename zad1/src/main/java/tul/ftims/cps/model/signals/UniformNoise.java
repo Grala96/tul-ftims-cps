@@ -60,4 +60,8 @@ public class UniformNoise extends Signal {
         this.setEffectiveValue(EffectiveValueC(this.getStartTime(), t2, this::funcPow));
     }
 
+    public SignalCategory getSignalCategory(){
+        return SignalCategory.CONTINUOUS;
+    }
+
 }
