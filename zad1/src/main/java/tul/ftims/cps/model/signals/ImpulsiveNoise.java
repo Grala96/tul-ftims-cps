@@ -10,7 +10,7 @@ public class ImpulsiveNoise extends Signal {
 
     Double ts;
 
-    public ImpulsiveNoise(Double amplitude, Double startTime, Double duration, Double ts, D) {
+    public ImpulsiveNoise(Double amplitude, Double startTime, Double duration, Double ts) {
         super(amplitude, startTime, duration, 1.0, SignalCategory.DISCREET);
         this.ts = ts;
         this.generate(getSamples());
