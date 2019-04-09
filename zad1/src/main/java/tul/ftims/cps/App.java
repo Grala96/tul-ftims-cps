@@ -5,10 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import lombok.Data;
 import tul.ftims.cps.model.manager.SignalManager;
-import tul.ftims.cps.model.signals.TriangularSignal;
-
 
 /**
  * Hello world!

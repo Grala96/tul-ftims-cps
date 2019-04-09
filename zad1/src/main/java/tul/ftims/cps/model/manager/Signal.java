@@ -1,14 +1,16 @@
 package tul.ftims.cps.model.manager;
 
 import com.google.inject.internal.util.Function;
+import com.sun.xml.internal.ws.developer.Serialization;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
 @Data
-public class Signal {
+public class Signal implements Serializable {
 
     private UUID uuid;
     private String name; // Własna nazwa dla sygnału (user)
@@ -106,6 +108,5 @@ public class Signal {
     public String toString() {
         return this.name;
     }
-
 
 }

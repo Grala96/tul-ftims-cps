@@ -42,6 +42,9 @@ public class AddNewSignalController {
     private TextField ANS_FillFactor;
 
     @FXML
+    private TextField ANS_Name;
+
+    @FXML
     private Button ANS_Create;
 
     @FXML

@@ -1,5 +1,7 @@
 package tul.ftims.cps.controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,10 +10,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tul.ftims.cps.App;
 import tul.ftims.cps.model.manager.Signal;
+import tul.ftims.cps.model.manager.io.FileService;
 
+import java.io.File;
 import java.io.IOException;
 
 import static tul.ftims.cps.App.signalManager;
@@ -138,6 +143,7 @@ public class MainController {
         assert P_Variance != null : "fx:id=\"P_Variance\" was not injected: check your FXML file 'Main.fxml'.";
         assert P_EffectiveValue != null : "fx:id=\"P_EffectiveValue\" was not injected: check your FXML file 'Main.fxml'.";
 
+        P_ListOfSignals_ListView.setItems(signalManager.getRepository());
 
         MB_S_NewSignal.setOnAction(event -> {
             try {
@@ -146,17 +152,43 @@ public class MainController {
                 Stage stage = new Stage();
                 stage.setTitle("Signal And Noise Generator");
                 stage.setScene(new Scene(root));
+                stage.setResizable(false);
                 stage.show();
             } catch (IOException e) {
                 System.out.println("Can't load window \"New Signal\"");
             }
         });
 
-        P_ListOfSignals_ListView.setItems(signalManager.getRepository());
+        MB_F_LoadProject.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            Stage openFile = new Stage();
+            openFile.setTitle("Wybierz plik projektu do odczytu.");
+            File file = fileChooser.showOpenDialog(openFile);
+            if (file != null) {
+                try {
+                    P_ListOfSignals_ListView.getItems().clear();
+                    FileService.loadFromFile(file, signalManager);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
 
-//        P_ListOfSignals_ListView.getSelectionModel().selectedItemProperty().addListener((InvalidationListener) (observable, oldValue, newValue) -> P_Amplitude.textProperty().setValue());
-
-//        P_Amplitude.textProperty().setValue(P_ListOfSignals_ListView.getSelectionModel().getSelectedItem().getAmplitude().toString()==null?);
+        MB_F_SaveProject.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            Stage saveFile = new Stage();
+            saveFile.setTitle("Wybierz ścieżkę do zapisu projektu.");
+            File file = fileChooser.showSaveDialog(saveFile);
+            if (file != null) {
+                try {
+                    FileService.saveToFile(file, signalManager);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
 
     }
 }
