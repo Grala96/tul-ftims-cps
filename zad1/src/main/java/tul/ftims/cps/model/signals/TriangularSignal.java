@@ -1,30 +1,35 @@
-package tul.ftims.cps.model;
+package tul.ftims.cps.model.signals;
+
+import tul.ftims.cps.model.manager.Signal;
+import tul.ftims.cps.model.manager.SignalCategory;
 
 import java.util.Map;
 
-public class UnitJump extends Signal {
+public class TriangularSignal extends Signal {
 
-    Double ts;
+    Double kw; //współczynnik czasu trwania wartości maksymalnej do okresu
 
-    public UnitJump(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double ts) {
-        super(amplitude, startTime, duration, samplingFrequency, 0.0, SignalCategory.CONTINUOUS);
-        this.ts = ts;
+    public TriangularSignal(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double T, Double kw) {
+        super(amplitude, startTime, duration, samplingFrequency, T, SignalCategory.CONTINUOUS);
+        this.kw = kw;
         this.generate(getSamples());
         this.calculateValues();
     }
 
-    public UnitJump(double amplitude, double startTime, double duration, double samplingFrequency, double ts) {
-        super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(samplingFrequency), Double.valueOf(0.0), SignalCategory.CONTINUOUS);
-        this.ts = ts;
+    public TriangularSignal(double amplitude, double startTime, double duration, double samplingFrequency, double T, double kw) {
+        super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(samplingFrequency), Double.valueOf(T), SignalCategory.CONTINUOUS);
+        this.kw = kw;
         this.generate(getSamples());
         this.calculateValues();
     }
 
     public double func(double t1) {
         double result;
-        if (t1 > ts) result = this.getAmplitude();
-        else if (t1 == ts) result = this.getAmplitude() * 0.5;
-        else result = 0;
+        double k = Math.floor((t1 - this.getStartTime()) / this.getPeriod());
+        if (k > (t1 - 0.5 * this.getPeriod()) / this.getPeriod())
+            result = (this.getAmplitude() / (kw * this.getPeriod())) * (t1 - k * this.getPeriod() - this.getStartTime());
+        else
+            result = ((0.0 - this.getAmplitude()) / (this.getPeriod() * (1 - kw))) * (t1 - k * this.getPeriod() - this.getStartTime()) + this.getAmplitude() / (1 - kw);
         return result;
     }
 
@@ -37,7 +42,6 @@ public class UnitJump extends Signal {
     }
 
     public double funcVar(double t1) {
-        Double t2 = this.getStartTime() + this.getDuration();
         return Math.pow(func(t1) - getMediumValue(), 2);
     }
 
@@ -56,4 +60,5 @@ public class UnitJump extends Signal {
         this.setVariance(MediumValueORAbsolutMediumValueORMediumPowerORVarianceC(this.getStartTime(), t2, this::funcVar));
         this.setEffectiveValue(EffectiveValueC(this.getStartTime(), t2, this::funcPow));
     }
+
 }

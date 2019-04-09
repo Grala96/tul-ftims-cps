@@ -1,19 +1,22 @@
-package tul.ftims.cps.model;
+package tul.ftims.cps.model.signals;
+
+import tul.ftims.cps.model.manager.Signal;
+import tul.ftims.cps.model.manager.SignalCategory;
 
 import java.util.Map;
 
-public class TriangularSignal extends Signal {
+public class RectanguralSignal extends Signal {
 
     Double kw; //współczynnik czasu trwania wartości maksymalnej do okresu
 
-    public TriangularSignal(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double T, Double kw) {
+    public RectanguralSignal(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double T, Double kw) {
         super(amplitude, startTime, duration, samplingFrequency, T, SignalCategory.CONTINUOUS);
         this.kw = kw;
         this.generate(getSamples());
         this.calculateValues();
     }
 
-    public TriangularSignal(double amplitude, double startTime, double duration, double samplingFrequency, double T, double kw) {
+    public RectanguralSignal(double amplitude, double startTime, double duration, double samplingFrequency, double T, double kw) {
         super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(samplingFrequency), Double.valueOf(T), SignalCategory.CONTINUOUS);
         this.kw = kw;
         this.generate(getSamples());
@@ -22,11 +25,10 @@ public class TriangularSignal extends Signal {
 
     public double func(double t1) {
         double result;
-        double k = Math.floor((t1 - this.getStartTime()) / this.getT());
-        if (k > (t1 - 0.5 * this.getT()) / this.getT())
-            result = (this.getAmplitude() / (kw * this.getT())) * (t1 - k * this.getT() - this.getStartTime());
-        else
-            result = ((0.0 - this.getAmplitude()) / (this.getT() * (1 - kw))) * (t1 - k * this.getT() - this.getStartTime()) + this.getAmplitude() / (1 - kw);
+        double k = Math.floor((t1 - this.getStartTime()) / this.getPeriod());
+        if (k > (t1 - 0.5 * this.getPeriod()) / this.getPeriod())
+            result = this.getAmplitude();
+        else result = 0;
         return result;
     }
 
@@ -42,6 +44,7 @@ public class TriangularSignal extends Signal {
         return Math.pow(func(t1) - getMediumValue(), 2);
     }
 
+    //nie działa!!! //jednak działa!!
     public void generate(Map<Double, Double> samples) {
         Double t2 = this.getStartTime() + this.getDuration(); // (t1 + d)
         for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += 1 / this.getSamplingFrequency()) {
@@ -59,3 +62,4 @@ public class TriangularSignal extends Signal {
     }
 
 }
+

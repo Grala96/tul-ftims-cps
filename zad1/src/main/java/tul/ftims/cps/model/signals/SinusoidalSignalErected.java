@@ -1,4 +1,7 @@
-package tul.ftims.cps.model;
+package tul.ftims.cps.model.signals;
+
+import tul.ftims.cps.model.manager.Signal;
+import tul.ftims.cps.model.manager.SignalCategory;
 
 import java.util.Map;
 
@@ -16,7 +19,7 @@ public class SinusoidalSignalErected extends Signal {
     }
 
     public double func(double t1) {
-        return this.getAmplitude() * Math.abs(Math.sin(((2 * Math.PI) / this.getT()) * ((t1 - this.getStartTime()))));
+        return this.getAmplitude() * Math.abs(Math.sin(((2 * Math.PI) / this.getPeriod()) * ((t1 - this.getStartTime()))));
     }
 
     public double funcAbs(double t1) {

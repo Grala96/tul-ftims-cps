@@ -1,4 +1,7 @@
-package tul.ftims.cps.model;
+package tul.ftims.cps.model.signals;
+
+import tul.ftims.cps.model.manager.Signal;
+import tul.ftims.cps.model.manager.SignalCategory;
 
 import java.util.Map;
 
@@ -22,8 +25,8 @@ public class SymmetricalRectangularSignal extends Signal {
 
     public double func(double t1) {
         double result;
-        double k = Math.floor((t1 - this.getStartTime()) / this.getT());
-        if (k > (t1 - 0.5 * this.getT()) / this.getT())
+        double k = Math.floor((t1 - this.getStartTime()) / this.getPeriod());
+        if (k > (t1 - 0.5 * this.getPeriod()) / this.getPeriod())
             result = this.getAmplitude();
         else result = 0 - this.getAmplitude();
         return result;

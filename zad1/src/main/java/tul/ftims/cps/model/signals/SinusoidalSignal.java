@@ -1,33 +1,28 @@
-package tul.ftims.cps.model;
+package tul.ftims.cps.model.signals;
+
+import lombok.Data;
+import tul.ftims.cps.model.manager.Signal;
+import tul.ftims.cps.model.manager.SignalCategory;
 
 import java.util.Map;
-import java.util.Random;
 
-public class GaussianNoise extends Signal {
+@Data
+public class SinusoidalSignal extends Signal {
 
-    public GaussianNoise(Double amplitude, Double startTime, Double duration, Double samplingFrequency) {
-        super(amplitude, startTime, duration, samplingFrequency, SignalCategory.CONTINUOUS);
+    public SinusoidalSignal(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double T) {
+        super(amplitude, startTime, duration, samplingFrequency, T, SignalCategory.CONTINUOUS);
         this.generate(getSamples());
         this.calculateValues();
     }
 
-    public GaussianNoise(double amplitude, double startTime, double duration, double samplingFrequency) {
-        super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(samplingFrequency), SignalCategory.CONTINUOUS);
+    public SinusoidalSignal(double amplitude, double startTime, double duration, double samplingFrequency, double T) {
+        super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(samplingFrequency), Double.valueOf(T), SignalCategory.CONTINUOUS);
         this.generate(getSamples());
         this.calculateValues();
     }
-
-    // Funkcja gęstości rozkładu zmiennej losowej
-    public Double probabilityDensityFunction(Double x) {
-        return (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-(Math.pow(x.doubleValue(), 2)) / 2);
-    }
-
-    Double t2 = this.getStartTime() + this.getDuration(); // (t1 + d)
-    double minimalAmplitude = -Math.abs(this.getAmplitude().doubleValue()); // min(A)
-    double maximumAmplitude = Math.abs(this.getAmplitude().doubleValue()); // max(A)
 
     public double func(double t1) {
-        return probabilityDensityFunction(minimalAmplitude + new Random().nextDouble() * (maximumAmplitude - minimalAmplitude));
+        return this.getAmplitude() * Math.sin(((2 * Math.PI) / this.getPeriod()) * ((t1 - this.getStartTime())));
     }
 
     public double funcAbs(double t1) {
@@ -39,12 +34,13 @@ public class GaussianNoise extends Signal {
     }
 
     public double funcVar(double t1) {
+        Double t2 = this.getStartTime() + this.getDuration();
         return Math.pow(func(t1) - getMediumValue(), 2);
     }
 
     public void generate(Map<Double, Double> samples) {
-
-        for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += 1 / this.getSamplingFrequency()) {
+        Double t2 = this.getStartTime() + this.getDuration(); // (t1 + d)
+        for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += (1 / this.getSamplingFrequency())) {
             samples.put(t1, func(t1));
         }
     }
@@ -57,4 +53,5 @@ public class GaussianNoise extends Signal {
         this.setVariance(MediumValueORAbsolutMediumValueORMediumPowerORVarianceC(this.getStartTime(), t2, this::funcVar));
         this.setEffectiveValue(EffectiveValueC(this.getStartTime(), t2, this::funcPow));
     }
+
 }

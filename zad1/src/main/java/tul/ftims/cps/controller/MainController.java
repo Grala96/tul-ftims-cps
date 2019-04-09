@@ -1,16 +1,22 @@
 package tul.ftims.cps.controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tul.ftims.cps.App;
-import tul.ftims.cps.model.Signal;
+import tul.ftims.cps.model.manager.Signal;
+import tul.ftims.cps.model.manager.io.FileService;
 
+import java.io.File;
 import java.io.IOException;
 
 import static tul.ftims.cps.App.signalManager;
@@ -72,6 +78,39 @@ public class MainController {
     private TitledPane P_Statistics;
 
     @FXML
+    private TextField P_Amplitude;
+
+    @FXML
+    private TextField P_StartTime;
+
+    @FXML
+    private TextField P_Duration;
+
+    @FXML
+    private TextField P_SampleFrequency;
+
+    @FXML
+    private TextField P_BasicPeriod;
+
+    @FXML
+    private TextField P_FillFactor;
+
+    @FXML
+    private TextField P_AverageValue;
+
+    @FXML
+    private TextField P_MeanAbsolute;
+
+    @FXML
+    private TextField P_AverageStrength;
+
+    @FXML
+    private TextField P_Variance;
+
+    @FXML
+    private TextField P_EffectiveValue;
+
+    @FXML
     void initialize() {
 
         assert MB_F_NewProject != null : "fx:id=\"MB_F_NewProject\" was not injected: check your FXML file 'Main.fxml'.";
@@ -92,6 +131,19 @@ public class MainController {
         assert P_ListOfSignals != null : "fx:id=\"P_ListOfSignals\" was not injected: check your FXML file 'Main.fxml'.";
         assert P_ListOfSignals_ListView != null : "fx:id=\"P_ListOfSignals_ListView\" was not injected: check your FXML file 'Main.fxml'.";
         assert P_Statistics != null : "fx:id=\"P_Statistics\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_Amplitude != null : "fx:id=\"P_Amplitude\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_StartTime != null : "fx:id=\"P_StartTime\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_Duration != null : "fx:id=\"P_Duration\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_SampleFrequency != null : "fx:id=\"P_SampleFrequency\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_BasicPeriod != null : "fx:id=\"P_BasicPeriod\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_FillFactor != null : "fx:id=\"P_FillFactor\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_AverageValue != null : "fx:id=\"P_AverageValue\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_MeanAbsolute != null : "fx:id=\"P_MeanAbsolute\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_AverageStrength != null : "fx:id=\"P_AverageStrength\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_Variance != null : "fx:id=\"P_Variance\" was not injected: check your FXML file 'Main.fxml'.";
+        assert P_EffectiveValue != null : "fx:id=\"P_EffectiveValue\" was not injected: check your FXML file 'Main.fxml'.";
+
+        P_ListOfSignals_ListView.setItems(signalManager.getRepository());
 
         MB_S_NewSignal.setOnAction(event -> {
             try {
@@ -100,15 +152,44 @@ public class MainController {
                 Stage stage = new Stage();
                 stage.setTitle("Signal And Noise Generator");
                 stage.setScene(new Scene(root));
+                stage.setResizable(false);
                 stage.show();
             } catch (IOException e) {
                 System.out.println("Can't load window \"New Signal\"");
+                e.printStackTrace();
             }
         });
 
-        P_ListOfSignals_ListView.setItems(signalManager.getRepository());
+        MB_F_LoadProject.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            Stage openFile = new Stage();
+            openFile.setTitle("Wybierz plik projektu do odczytu.");
+            File file = fileChooser.showOpenDialog(openFile);
+            if (file != null) {
+                try {
+                    P_ListOfSignals_ListView.getItems().clear();
+                    FileService.loadFromFile(file, signalManager);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
 
-        
+        MB_F_SaveProject.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            Stage saveFile = new Stage();
+            saveFile.setTitle("Wybierz ścieżkę do zapisu projektu.");
+            File file = fileChooser.showSaveDialog(saveFile);
+            if (file != null) {
+                try {
+                    FileService.saveToFile(file, signalManager);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
 
     }
 }

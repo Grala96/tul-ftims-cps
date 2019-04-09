@@ -1,4 +1,7 @@
-package tul.ftims.cps.model;
+package tul.ftims.cps.model.signals;
+
+import tul.ftims.cps.model.manager.Signal;
+import tul.ftims.cps.model.manager.SignalCategory;
 
 import java.util.Map;
 
@@ -18,8 +21,8 @@ public class SinusoidalSignalHalfErected extends Signal {
 
     public double func(double t1) {
         return 0.5 * this.getAmplitude() *
-                (Math.sin(((2 * Math.PI) / this.getT()) * ((t1 - this.getStartTime())))
-                        + Math.abs(Math.sin(((2 * Math.PI) / this.getT()) * ((t1 - this.getStartTime())))));
+                (Math.sin(((2 * Math.PI) / this.getPeriod()) * ((t1 - this.getStartTime())))
+                        + Math.abs(Math.sin(((2 * Math.PI) / this.getPeriod()) * ((t1 - this.getStartTime())))));
     }
 
     public double funcAbs(double t1) {
@@ -37,7 +40,7 @@ public class SinusoidalSignalHalfErected extends Signal {
 
     public void generate(Map<Double, Double> samples) {
         Double t2 = this.getStartTime() + this.getDuration(); // (t1 + d)
-        for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += 1 / this.getT()) {
+        for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += 1 / this.getPeriod()) {
             samples.put(t1, func(t1));
         }
     }
