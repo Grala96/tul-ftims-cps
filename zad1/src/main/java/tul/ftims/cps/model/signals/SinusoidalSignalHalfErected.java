@@ -1,34 +1,28 @@
-package tul.ftims.cps.model;
+package tul.ftims.cps.model.signals;
 
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import tul.ftims.cps.model.manager.Signal;
+import tul.ftims.cps.model.manager.SignalCategory;
 
 import java.util.Map;
-import java.util.Random;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-public class UniformNoise extends Signal {
+public class SinusoidalSignalHalfErected extends Signal {
 
-    public UniformNoise(Double amplitude, Double startTime, Double duration, Double samplingFrequency) {
-        super(amplitude, startTime, duration, samplingFrequency, SignalCategory.CONTINUOUS);
+    public SinusoidalSignalHalfErected(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double T) {
+        super(amplitude, startTime, duration, samplingFrequency, T, SignalCategory.CONTINUOUS);
         this.generate(getSamples());
         this.calculateValues();
     }
 
-    public UniformNoise(double amplitude, double startTime, double duration, double samplingFrequency) {
-        super(amplitude, startTime, duration, samplingFrequency, SignalCategory.CONTINUOUS);
+    public SinusoidalSignalHalfErected(double amplitude, double startTime, double duration, double samplingFrequency, double T) {
+        super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(samplingFrequency), Double.valueOf(T), SignalCategory.CONTINUOUS);
         this.generate(getSamples());
         this.calculateValues();
     }
-
-    Double t2 = this.getStartTime() + this.getDuration(); // (t1 + d)
-    double minimalAmplitude = -Math.abs(this.getAmplitude()); // min(A)
-    double maximumAmplitude = Math.abs(this.getAmplitude()); // max(A)
 
     public double func(double t1) {
-        return minimalAmplitude + new Random().nextDouble() * (maximumAmplitude - minimalAmplitude);
+        return 0.5 * this.getAmplitude() *
+                (Math.sin(((2 * Math.PI) / this.getT()) * ((t1 - this.getStartTime())))
+                        + Math.abs(Math.sin(((2 * Math.PI) / this.getT()) * ((t1 - this.getStartTime())))));
     }
 
     public double funcAbs(double t1) {
@@ -40,11 +34,13 @@ public class UniformNoise extends Signal {
     }
 
     public double funcVar(double t1) {
+        Double t2 = this.getStartTime() + this.getDuration();
         return Math.pow(func(t1) - getMediumValue(), 2);
     }
 
     public void generate(Map<Double, Double> samples) {
-        for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += 1 / this.getSamplingFrequency()) {
+        Double t2 = this.getStartTime() + this.getDuration(); // (t1 + d)
+        for (Double t1 = this.getStartTime(); t1.compareTo(t2) < 0; t1 += 1 / this.getT()) {
             samples.put(t1, func(t1));
         }
     }
@@ -57,5 +53,4 @@ public class UniformNoise extends Signal {
         this.setVariance(MediumValueORAbsolutMediumValueORMediumPowerORVarianceC(this.getStartTime(), t2, this::funcVar));
         this.setEffectiveValue(EffectiveValueC(this.getStartTime(), t2, this::funcPow));
     }
-
 }
