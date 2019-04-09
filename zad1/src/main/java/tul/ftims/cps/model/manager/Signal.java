@@ -1,8 +1,8 @@
 package tul.ftims.cps.model.manager;
 
 import com.google.inject.internal.util.Function;
-import com.sun.xml.internal.ws.developer.Serialization;
 import lombok.Data;
+import tul.ftims.cps.model.signals.*;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class Signal implements Serializable {
     private Double samplingFrequency = 1.0; // Częstotliwość próbkowania [Hz]
     private Map<Double, Double> samples = new TreeMap<>(); // Mapa (czas, wartość próbki)
 
-    private Double T; //okres
+    private Double period; //okres
     private SignalCategory signal; //typ sygnału (ciągły / dyskretny)
 
     private Double mediumValue;
@@ -38,7 +38,7 @@ public class Signal implements Serializable {
         this.signal = type;
     }
 
-    public Signal(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double T, SignalCategory type) {
+    public Signal(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double period, SignalCategory type) {
         this.uuid = UUID.randomUUID();
         this.name = uuid.toString();
         this.amplitude = amplitude;
@@ -54,7 +54,7 @@ public class Signal implements Serializable {
         this.startTime = startTime;
         this.duration = duration;
         this.samplingFrequency = samplingFrequency;
-        this.T = T;
+        this.period = period;
 //        this.signal = type;
     }
 
@@ -109,4 +109,37 @@ public class Signal implements Serializable {
         return this.name;
     }
 
+//    public static Signal createSignal(SignalType signalType, Double amplitude, Double startTime,
+//                                      Double duration, Double samplingFrequency, Double basicPeriod,
+//                                      Double fillFactor, Double jumpTime, Double probability) {
+//        switch (signalType) {
+//            case UNIFORM_NOISE:
+//                return null;
+//            case GAUSSIAN_NOISE:
+//                return null;
+//            case SINUSOIDAL_SIGNAL:
+//                return null;
+//            case SINUSOIDAL_SIGNAL_HALF_ERECTED:
+//                return null;
+//            case SINUSOIDAL_SIGNAL_ERECTED:
+//                return null;
+//            case RECTANGULAR_SIGNAL:
+//                return null;
+//            case SYMMETRICAL_RECTANGULAR_SIGNAL:
+//                return null;
+//            case TRIANGULAR_SIGNAL:
+//                return null;
+//            case UNIT_JUMP:
+//                return null;
+//            case UNIT_PULSE:
+//                return null;
+//            case IMPULSIVE_NOISE:
+//                return null;
+//            default:
+//                System.out.println("Choosen unknown signal type! Creating canceled!");
+//                return null;
+//        }
+//    }
 }
+
+

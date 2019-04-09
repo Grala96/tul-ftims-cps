@@ -156,6 +156,7 @@ public class MainController {
                 stage.show();
             } catch (IOException e) {
                 System.out.println("Can't load window \"New Signal\"");
+                e.printStackTrace();
             }
         });
 

@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import tul.ftims.cps.model.manager.Signal;
 import tul.ftims.cps.model.manager.SignalType;
 
+import javax.xml.soap.Text;
 import java.util.regex.Pattern;
 
 import static tul.ftims.cps.App.signalManager;
@@ -42,6 +43,9 @@ public class AddNewSignalController {
     private TextField ANS_FillFactor;
 
     @FXML
+    private TextField ANS_Probability;
+
+    @FXML
     private TextField ANS_Name;
 
     @FXML
@@ -71,6 +75,8 @@ public class AddNewSignalController {
 
     @FXML
     void initialize() {
+//        Signal newSignal;
+
         assert ANS != null : "fx:id=\"ANS\" was not injected: check your FXML file 'AddNewSignal.fxml'.";
         assert ANS_Amplitude != null : "fx:id=\"ANS_Amplitude\" was not injected: check your FXML file 'AddNewSignal.fxml'.";
         assert ANS_StartTime != null : "fx:id=\"ANS_StartTime\" was not injected: check your FXML file 'AddNewSignal.fxml'.";
@@ -87,13 +93,25 @@ public class AddNewSignalController {
         ANS_SignalType.getItems().setAll(SignalType.values());
         ANS_SignalType.getSelectionModel().selectFirst();
 
+//        ANS_SignalType.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends SignalType> observable, SignalType oldValue, SignalType newValue) -> {
+//            System.out.println("Test");
+//        });
+
+//        box.getSelectionModel()
+//                .selectedItemProperty()
+//                .addListener( (ObservableValue<? extends String> observable, String oldValue, String newValue) -> System.out.println(newValue) );
+
+//        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+//            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+//        });
+
         // Walidacja dla wartości zmiennoprzecinkowych
-        setValidationForTextField(ANS_Amplitude);
-        setValidationForTextField(ANS_StartTime);
-        setValidationForTextField(ANS_Duration);
-        setValidationForTextField(ANS_SampleFrequency);
-        setValidationForTextField(ANS_BasicPeriod);
-        setValidationForTextField(ANS_FillFactor);
+//        setValidationForTextField(ANS_Amplitude);
+//        setValidationForTextField(ANS_StartTime);
+//        setValidationForTextField(ANS_Duration);
+//        setValidationForTextField(ANS_SampleFrequency);
+//        setValidationForTextField(ANS_BasicPeriod);
+//        setValidationForTextField(ANS_FillFactor);
 
         // Stwarzamy sygnał po wciśnięciu przycisku "Create"
         ANS_Create.setOnAction(event -> {
@@ -140,7 +158,11 @@ public class AddNewSignalController {
         });
 
 
+
     }
 
+    public void tryCreateSignal(){
+
+    }
 
 }

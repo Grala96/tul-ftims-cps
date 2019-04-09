@@ -25,11 +25,11 @@ public class TriangularSignal extends Signal {
 
     public double func(double t1) {
         double result;
-        double k = Math.floor((t1 - this.getStartTime()) / this.getT());
-        if (k > (t1 - 0.5 * this.getT()) / this.getT())
-            result = (this.getAmplitude() / (kw * this.getT())) * (t1 - k * this.getT() - this.getStartTime());
+        double k = Math.floor((t1 - this.getStartTime()) / this.getPeriod());
+        if (k > (t1 - 0.5 * this.getPeriod()) / this.getPeriod())
+            result = (this.getAmplitude() / (kw * this.getPeriod())) * (t1 - k * this.getPeriod() - this.getStartTime());
         else
-            result = ((0.0 - this.getAmplitude()) / (this.getT() * (1 - kw))) * (t1 - k * this.getT() - this.getStartTime()) + this.getAmplitude() / (1 - kw);
+            result = ((0.0 - this.getAmplitude()) / (this.getPeriod() * (1 - kw))) * (t1 - k * this.getPeriod() - this.getStartTime()) + this.getAmplitude() / (1 - kw);
         return result;
     }
 
