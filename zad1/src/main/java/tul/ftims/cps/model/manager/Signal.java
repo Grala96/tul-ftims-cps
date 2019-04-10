@@ -23,6 +23,11 @@ public class Signal implements Serializable {
     // wywalić niepotrzebne pola poniżej, statystyki będą liczone w locie, nie trzeba ich niepotrzebnie przechowywać w obiekcie
     // typ i kategoria sygnału mają być zwracane przez metody
     // metody dot. liczenia statystyk usunąć, mają być zaimplementowane w katalogu statistics
+    // Niech w sygnale będą pola amplitude, startTime, duration i samplingFrequency
+    // Przy czym dla skoku jednostkowego będą 2 samplingFrequency - jeden dla sygnału drugi dla
+    // tego konkretnego przypadku tj.  activationTime -> czyli w jakim momencie ma zostać wykonany ten skok
+    // Więc należy rozróżnić te dwie rzeczy (samplingFrequency swoją drogą dla każdego)
+    // i dla tych dyskretnych activationTime -> wykonywane skoki
 
     private Double period; //okres
     private SignalCategory signal; //typ sygnału (ciągły / dyskretny)

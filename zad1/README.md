@@ -26,5 +26,5 @@ Generacja sygnału i szumu
 * T - basicPeriod
 * kw - fillFactor
 * ts / ns - jumpTime
-* f - samplingFrequency
+* f - activationTime
 * p - probability
