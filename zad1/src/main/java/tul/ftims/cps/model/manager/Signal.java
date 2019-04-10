@@ -20,6 +20,10 @@ public class Signal implements Serializable {
     private Double samplingFrequency = 1.0; // Częstotliwość próbkowania [Hz]
     private Map<Double, Double> samples = new TreeMap<>(); // Mapa (czas, wartość próbki)
 
+    // wywalić niepotrzebne pola poniżej, statystyki będą liczone w locie, nie trzeba ich niepotrzebnie przechowywać w obiekcie
+    // typ i kategoria sygnału mają być zwracane przez metody
+    // metody dot. liczenia statystyk usunąć, mają być zaimplementowane w katalogu statistics
+
     private Double period; //okres
     private SignalCategory signal; //typ sygnału (ciągły / dyskretny)
 

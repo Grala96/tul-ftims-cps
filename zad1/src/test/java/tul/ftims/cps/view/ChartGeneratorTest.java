@@ -9,6 +9,6 @@ class ChartGeneratorTest {
     @Test
     void generate() {
         ChartGenerator chartGenerator = new ChartGenerator();
-        chartGenerator.generate();
+//        chartGenerator.generate();
     }
 }
