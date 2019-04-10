@@ -10,8 +10,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tul.ftims.cps.model.manager.Signal;
 import tul.ftims.cps.model.manager.SignalType;
+import tul.ftims.cps.model.signals.UniformNoise;
+import tul.ftims.cps.view.ChartGenerator;
 
-import javax.xml.soap.Text;
 import java.util.regex.Pattern;
 
 import static tul.ftims.cps.App.signalManager;
@@ -94,6 +95,10 @@ public class AddNewSignalController {
         // ChoiceBox dla typu sygnału (zdefiniowane po enum SignalType)
         ANS_SignalType.getItems().setAll(SignalType.values());
         ANS_SignalType.getSelectionModel().selectFirst();
+
+        ANS_Preview.setOnAction(event -> {
+            ChartGenerator.printGraph(new UniformNoise(5,0,15,1));
+        });
 
 //        ANS_SignalType.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends SignalType> observable, SignalType oldValue, SignalType newValue) -> {
 //            System.out.println("Test");
