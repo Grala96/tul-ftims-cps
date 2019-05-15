@@ -17,7 +17,8 @@ public class Signal implements Serializable {
     private Double amplitude; // Amplituda [dimensionless unit]
     private Double startTime; // Czas początkowy [s]
     private Double duration; // Czas trwania sygnału [s]
-    private Double samplingFrequency = 1.0; // Częstotliwość próbkowania [Hz]
+    private Double samplingFrequency = 1.0; // Częstotliwość próbkowania [Hz] // default 1 Hz
+
     private Map<Double, Double> samples = new TreeMap<>(); // Mapa (czas, wartość próbki)
 
     // wywalić niepotrzebne pola poniżej, statystyki będą liczone w locie, nie trzeba ich niepotrzebnie przechowywać w obiekcie
@@ -118,7 +119,7 @@ public class Signal implements Serializable {
         return this.name;
     }
 
-    public static Signal createSignal(SignalType signalType, Double amplitude, Double startTime,
+    public static Signal createSignal(String name, SignalType signalType, Double amplitude, Double startTime,
                                       Double duration, Double samplingFrequency, Double basicPeriod,
                                       Double fillFactor, Double jumpTime, Double probability) {
         switch (signalType) {
@@ -143,7 +144,7 @@ public class Signal implements Serializable {
             case UNIT_PULSE:
                 return new UnitPulse(amplitude,startTime,duration,jumpTime);
             case IMPULSIVE_NOISE:
-                return new ImpulsiveNoise(amplitude,startTime,duration,jumpTime);
+                return new ImpulsiveNoise(amplitude,startTime,duration, samplingFrequency, probability);
             default:
                 System.out.println("Choosen unknown signal type! Creating canceled!");
                 return null;

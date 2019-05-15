@@ -1,13 +1,11 @@
 package tul.ftims.cps.model.manager;
 
-import com.sun.xml.internal.ws.developer.Serialization;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Data;
 import tul.ftims.cps.model.operations.OperationType;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;

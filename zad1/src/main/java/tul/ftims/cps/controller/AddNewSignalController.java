@@ -13,9 +13,11 @@ import tul.ftims.cps.model.manager.SignalType;
 import tul.ftims.cps.model.signals.UniformNoise;
 import tul.ftims.cps.view.ChartGenerator;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import static tul.ftims.cps.App.signalManager;
+import static tul.ftims.cps.model.manager.Signal.createSignal;
 
 public class AddNewSignalController {
 
@@ -49,7 +51,8 @@ public class AddNewSignalController {
     @FXML
     private TextField ANS_Name;
 
-    @FXML TextField ANS_JumpTime;
+    @FXML
+    TextField ANS_JumpTime;
 
     @FXML
     private Button ANS_Create;
@@ -97,7 +100,19 @@ public class AddNewSignalController {
         ANS_SignalType.getSelectionModel().selectFirst();
 
         ANS_Preview.setOnAction(event -> {
-            ChartGenerator.printGraph(new UniformNoise(5,0,15,1));
+//            ChartGenerator.printGraph(new UniformNoise(5, 0, 15, 1));
+            ChartGenerator.printGraph(Objects.requireNonNull(createSignal(
+                    ANS_Name.textProperty().get(),
+                    ANS_SignalType.getValue(),
+                    new Double(ANS_Amplitude.textProperty().get()),
+                    new Double(ANS_StartTime.textProperty().get()),
+                    new Double(ANS_Duration.textProperty().get()),
+                    new Double(ANS_SampleFrequency.textProperty().get()),
+                    new Double(ANS_BasicPeriod.textProperty().get()),
+                    new Double(ANS_FillFactor.textProperty().get()),
+                    new Double(ANS_JumpTime.textProperty().get()),
+                    new Double(ANS_Probability.textProperty().get())
+            )));
         });
 
 //        ANS_SignalType.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends SignalType> observable, SignalType oldValue, SignalType newValue) -> {
@@ -123,52 +138,34 @@ public class AddNewSignalController {
         // Stwarzamy sygnał po wciśnięciu przycisku "Create"
         ANS_Create.setOnAction(event -> {
 
-            switch (ANS_SignalType.getValue()) {
-                case SINUSOIDAL_SIGNAL:
-                    break;
-                case SINUSOIDAL_SIGNAL_ERECTED:
-                    break;
-                case SINUSOIDAL_SIGNAL_HALF_ERECTED:
-                    break;
-                case GAUSSIAN_NOISE:
-                    break;
-                case IMPULSIVE_NOISE:
-                    break;
-                case UNIFORM_NOISE: {
-                    try {
-                        signalManager.add(new Signal(
-                                new Double(ANS_Amplitude.textProperty().get()),
-                                new Double(ANS_StartTime.textProperty().get()),
-                                new Double(ANS_Duration.textProperty().get()),
-                                new Double(ANS_SampleFrequency.textProperty().get())
-                        ));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Can't create this signal!");
-                    }
-                    ((Stage) ANS_Create.getScene().getWindow()).close(); // Closed window
-                    break;
-                }
-                case RECTANGULAR_SIGNAL:
-                    break;
-                case UNIT_JUMP:
-                    break;
-                case UNIT_PULSE:
-                    break;
-                default: {
-                    System.out.println("Choosen unknown signal type! Creating canceled!");
-                    break;
-                }
+            try {
+                signalManager.add(createSignal(
+                        ANS_Name.textProperty().get(),
+                        ANS_SignalType.getValue(),
+                        new Double(ANS_Amplitude.textProperty().get()),
+                        new Double(ANS_StartTime.textProperty().get()),
+                        new Double(ANS_Duration.textProperty().get()),
+                        new Double(ANS_SampleFrequency.textProperty().get()),
+                        new Double(ANS_BasicPeriod.textProperty().get()),
+                        new Double(ANS_FillFactor.textProperty().get()),
+                        new Double(ANS_JumpTime.textProperty().get()),
+                        new Double(ANS_Probability.textProperty().get())
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Can't create this signal!");
             }
+            ((Stage) ANS_Create.getScene().getWindow()).close(); // Closed window
+
+
 
 
         });
 
 
-
     }
 
-    public void tryCreateSignal(){
+    public void tryCreateSignal() {
 
     }
 

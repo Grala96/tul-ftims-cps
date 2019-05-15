@@ -8,27 +8,32 @@ import java.util.Random;
 
 public class ImpulsiveNoise extends Signal {
 
-    Double ts;
+    Double probability;
 
     public ImpulsiveNoise(Double amplitude, Double startTime, Double duration, Double ts) {
         super(amplitude, startTime, duration, 1.0, SignalCategory.DISCREET);
-        this.ts = ts;
+        this.probability = ts;
         this.generate(getSamples());
         this.calculateValues();
     }
 
     public ImpulsiveNoise(double amplitude, double startTime, double duration, double ts) {
         super(Double.valueOf(amplitude), Double.valueOf(startTime), Double.valueOf(duration), Double.valueOf(1.0), SignalCategory.DISCREET);
-        this.ts = ts;
+        this.probability = ts;
         this.generate(getSamples());
         this.calculateValues();
+    }
+
+    public ImpulsiveNoise(Double amplitude, Double startTime, Double duration, Double samplingFrequency, Double probability) {
+        super(amplitude, startTime, duration, samplingFrequency);
+        this.probability = probability;
     }
 
     public double func(double t1) {
         Random random = new Random();
         double result;
-        if (ts == 0) result = 0;
-        else if (random.nextInt(100) < ts) result = this.getAmplitude();
+        if (probability == 0) result = 0;
+        else if (random.nextInt(100) < probability) result = this.getAmplitude();
         else result = 0;
 
         return result;
