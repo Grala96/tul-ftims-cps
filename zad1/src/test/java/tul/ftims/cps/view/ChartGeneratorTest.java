@@ -12,6 +12,8 @@ class ChartGeneratorTest {
         Signal signal = new UniformNoise(5,0,15,5);
         ChartGenerator.printGraph(signal);
 
+//        ChartGenerator chartGenerator = new ChartGenerator();
+//        chartGenerator.generate();
     }
 
 }
